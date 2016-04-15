@@ -185,8 +185,8 @@
         
         // Attach the content view to our pan location
         self.attachmentBehaviour = [UIAttachmentBehavior slidingAttachmentWithItem:self.contentView
-                                                         attachmentAnchor:panLocation
-                                                                 axisOfTranslation:CGVectorMake(0.0, 1.0)];
+																  attachmentAnchor:panLocation
+																 axisOfTranslation:CGVectorMake(0.0, 1.0)];
         
         self.attachmentBehaviour.action = ^{
             [weakSelf updateEditActionButtons];
