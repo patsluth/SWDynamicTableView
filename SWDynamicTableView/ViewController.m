@@ -26,8 +26,8 @@
 
 @implementation ViewController
 
-- (void)viewDidLoad {
-    
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     
     self.pan = [[UIPanGestureRecognizer alloc] init];
@@ -51,7 +51,6 @@
             
             
             // Only allow one cell to be edited at a time
-            // COMMENT OUT TO ALLOW MULTIPLE CELLS TO BE EDITED AT THE SAME TIME
             for (SWDEditTableViewCell *temp in [self.tableView visibleCells]) {
                 if (temp != cell && temp.isEditing) {
                     [temp setEditing:NO animated:YES];

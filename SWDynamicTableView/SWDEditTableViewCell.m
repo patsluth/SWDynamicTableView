@@ -1,6 +1,6 @@
 //
 //  SWDEditTableViewCell.m
-//  test ***********
+//  SWDynamicTableView
 //
 //  Created by Pat Sluth on 2016-01-07.
 //  Copyright © 2016 Pat Sluth. All rights reserved.
@@ -43,6 +43,8 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     
     if (self) {
+        
+        self.currentEditActionIndex = 0;
         
         self.contentView.clipsToBounds = NO;
         self.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -159,7 +161,7 @@
                 
             }
             
-            //we have scroll past the farthest value, so we will return the last edit item
+            // we have scroll past the farthest value, so we will return the last edit item
             return copysign(editActions.count, offset);
             
         }
@@ -170,15 +172,15 @@
 
 - (void)onPan:(UIPanGestureRecognizer *)pan
 {
+    __unsafe_unretained SWDEditTableViewCell *weakSelf = self;
+    
     CGPoint panLocation = [pan locationInView:self];
-    __block SWDEditTableViewCell *bself = self;
     
     
     if (pan.state == UIGestureRecognizerStateBegan) {
         
         // Reset
         [self resetDynamicBehaviours];
-        self.currentEditActionIndex = 0;
         
         
         // Attach the content view to our pan location
@@ -187,8 +189,8 @@
                                                                  axisOfTranslation:CGVectorMake(0.0, 1.0)];
         
         self.attachmentBehaviour.action = ^{
-            [bself updateEditActionButtons];
-            [bself updateEditMagneticContentView];
+            [weakSelf updateEditActionButtons];
+            [weakSelf updateEditMagneticContentView];
         };
         
         [self.animator addBehavior:self.attachmentBehaviour];
@@ -201,42 +203,42 @@
         
         [self.animator removeBehavior:self.attachmentBehaviour];
         
-        //velocity after dragging
+        // velocity after dragging
         CGPoint velocity = [pan velocityInView:pan.view];
         
         UIDynamicItemBehavior *d = [[UIDynamicItemBehavior alloc] initWithItems:@[self.contentView]];
         d.allowsRotation = NO;
         d.resistance = 4.0;
         
-        __block UIDynamicItemBehavior *bd = d;
+        __unsafe_unretained UIDynamicItemBehavior *weakD = d;
         
         d.action = ^{
             
-            [bself updateEditActionButtons];
-            [bself updateEditMagneticContentView];
+            [weakSelf updateEditActionButtons];
+            [weakSelf updateEditMagneticContentView];
             
-            CGFloat leftSide = CGRectGetMinX(bself.contentView.frame);
-            CGFloat rightSide = CGRectGetMaxX(bself.contentView.frame);
+            CGFloat leftSide = CGRectGetMinX(weakSelf.contentView.frame);
+            CGFloat rightSide = CGRectGetMaxX(weakSelf.contentView.frame);
             
             if (rightSide < 0) {
-                bd.resistance = fabs(rightSide);
-            } else if (leftSide > CGRectGetMaxX(bself.frame)) {
-                bd.resistance = leftSide - CGRectGetMaxX(bself.frame);
+                weakD.resistance = fabs(rightSide);
+            } else if (leftSide > CGRectGetMaxX(weakSelf.frame)) {
+                weakD.resistance = leftSide - CGRectGetMaxX(weakSelf.frame);
             }
             
             
-            CGFloat absoluteVelocity = fabs([bd linearVelocityForItem:bself.contentView].x);
+            CGFloat absoluteVelocity = fabs([weakD linearVelocityForItem:weakSelf.contentView].x);
             
-            //snap to center if we are moving to slow
-            if (absoluteVelocity < CGRectGetMidX(bself.bounds)) {
-                [bself.animator removeBehavior:bd];
-                [bself snapToCurrentEditActionIndex];
+            // snap to center if we are moving to slow
+            if (absoluteVelocity < CGRectGetMidX(weakSelf.bounds)) {
+                [weakSelf.animator removeBehavior:weakD];
+                [weakSelf snapToCurrentEditActionIndex];
             }
             
         };
         
-        [bself.animator addBehavior:d];
-        [d addLinearVelocity:CGPointMake(velocity.x, 0.0) forItem:bself.contentView];
+        [weakSelf.animator addBehavior:d];
+        [d addLinearVelocity:CGPointMake(velocity.x, 0.0) forItem:weakSelf.contentView];
     }
 }
 
@@ -335,14 +337,6 @@
     }
 }
 
-
-
-
-
-
-
-
-
 - (void)prepareForReuse
 {
     [super prepareForReuse];
@@ -357,13 +351,6 @@
 {
     return ([self contentViewHorizontalOffset] != 0.0);
 }
-
-//- (void)setSelected:(BOOL)selected
-//{
-//    if ([self contentViewHorizontalOffset] == 0.0) {
-//        [super setSelected:selected];
-//    }
-//}
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated
 {
@@ -389,7 +376,6 @@
     [self.leftEditButton.contentView.widthAnchor constraintEqualToConstant:indentationWidth].active = YES;
     [self.rightEditButton.contentView.widthAnchor constraintEqualToConstant:indentationWidth].active = YES;
 }
-
 
 /**
  *  Offset of the draggable (content) view from rest position

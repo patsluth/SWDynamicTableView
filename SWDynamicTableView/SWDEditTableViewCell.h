@@ -1,6 +1,6 @@
 //
 //  SWDEditTableViewCell.h
-//  test
+//  SWDynamicTableView
 //
 //  Created by Pat Sluth on 2016-01-07.
 //  Copyright © 2016 Pat Sluth. All rights reserved.
