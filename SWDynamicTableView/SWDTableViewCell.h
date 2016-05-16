@@ -1,5 +1,5 @@
 //
-//  SWDEditTableViewCell.h
+//  SWDTableViewCell.h
 //  SWDynamicTableView
 //
 //  Created by Pat Sluth on 2016-01-07.
@@ -8,13 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
-@class SWDTableViewRowAction;
+#import "SWDTableViewRowAction.h"
 
 
 
 
 
-@interface SWDEditTableViewCell : UITableViewCell <UIGestureRecognizerDelegate, UIDynamicAnimatorDelegate>
+@interface SWDTableViewCell : UITableViewCell <UIDynamicAnimatorDelegate>
 {
 }
 
@@ -23,8 +23,9 @@
 @property (strong, nonatomic) NSArray<SWDTableViewRowAction *> *leftEditActions;
 @property (strong, nonatomic) NSArray<SWDTableViewRowAction *> *rightEditActions;
 
+@property (weak, nonatomic, readonly) SWDTableViewRowAction *currentEditAction;
+
 - (void)onPan:(UIGestureRecognizer *)pan;
-- (SWDTableViewRowAction *)currentEditAction;
 
 @end
 

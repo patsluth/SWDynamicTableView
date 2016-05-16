@@ -8,11 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+#import "SWDynamicTableView.h"
 
 
 
 
-@interface ViewController : UITableViewController <UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate>
+
+@interface ViewController : UITableViewController <SWDynamicTableViewDelegate, UITableViewDataSource>
 {
 }
 

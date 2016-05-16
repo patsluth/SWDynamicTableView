@@ -7,19 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E760B801CEA388100215390 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E760B7F1CEA388100215390 /* ViewController.m */; };
 		2E8C0C701C4334F100B221DC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E8C0C631C4334F100B221DC /* AppDelegate.m */; };
 		2E8C0C721C4334F100B221DC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2E8C0C661C4334F100B221DC /* LaunchScreen.storyboard */; };
 		2E8C0C731C4334F100B221DC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2E8C0C681C4334F100B221DC /* Main.storyboard */; };
 		2E8C0C7B1C43358F00B221DC /* SWDTableViewCellEditButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E8C0C7A1C43358F00B221DC /* SWDTableViewCellEditButton.m */; };
-		2E8C0C821C43359400B221DC /* SWDEditTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E8C0C7D1C43359400B221DC /* SWDEditTableViewCell.m */; };
-		2E8C0C831C43359400B221DC /* SWDTableViewCellEditButtonMagneticContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E8C0C7F1C43359400B221DC /* SWDTableViewCellEditButtonMagneticContentView.m */; };
+		2E8C0C821C43359400B221DC /* SWDTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E8C0C7D1C43359400B221DC /* SWDTableViewCell.m */; };
+		2E8C0C831C43359400B221DC /* SWDTableViewCellEditButtonContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E8C0C7F1C43359400B221DC /* SWDTableViewCellEditButtonContentView.m */; };
 		2E8C0C841C43359400B221DC /* SWDTableViewRowAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E8C0C811C43359400B221DC /* SWDTableViewRowAction.m */; };
-		2E8C0C871C4335A200B221DC /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E8C0C861C4335A200B221DC /* ViewController.m */; };
 		2E8C0C8A1C4335C000B221DC /* SWDynamicTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E8C0C891C4335C000B221DC /* SWDynamicTableView.m */; };
 		2E8C0C8E1C43363100B221DC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E8C0C8C1C43363100B221DC /* main.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2E760B7E1CEA388100215390 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		2E760B7F1CEA388100215390 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		2E8C0C481C43347F00B221DC /* SWDynamicTableView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SWDynamicTableView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E8C0C621C4334F100B221DC /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		2E8C0C631C4334F100B221DC /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -27,14 +29,12 @@
 		2E8C0C691C4334F100B221DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Main.storyboard; sourceTree = "<group>"; };
 		2E8C0C791C43358F00B221DC /* SWDTableViewCellEditButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWDTableViewCellEditButton.h; sourceTree = "<group>"; };
 		2E8C0C7A1C43358F00B221DC /* SWDTableViewCellEditButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWDTableViewCellEditButton.m; sourceTree = "<group>"; };
-		2E8C0C7C1C43359400B221DC /* SWDEditTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWDEditTableViewCell.h; sourceTree = "<group>"; };
-		2E8C0C7D1C43359400B221DC /* SWDEditTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWDEditTableViewCell.m; sourceTree = "<group>"; };
-		2E8C0C7E1C43359400B221DC /* SWDTableViewCellEditButtonMagneticContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWDTableViewCellEditButtonMagneticContentView.h; sourceTree = "<group>"; };
-		2E8C0C7F1C43359400B221DC /* SWDTableViewCellEditButtonMagneticContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWDTableViewCellEditButtonMagneticContentView.m; sourceTree = "<group>"; };
+		2E8C0C7C1C43359400B221DC /* SWDTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWDTableViewCell.h; sourceTree = "<group>"; };
+		2E8C0C7D1C43359400B221DC /* SWDTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWDTableViewCell.m; sourceTree = "<group>"; };
+		2E8C0C7E1C43359400B221DC /* SWDTableViewCellEditButtonContentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWDTableViewCellEditButtonContentView.h; sourceTree = "<group>"; };
+		2E8C0C7F1C43359400B221DC /* SWDTableViewCellEditButtonContentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWDTableViewCellEditButtonContentView.m; sourceTree = "<group>"; };
 		2E8C0C801C43359400B221DC /* SWDTableViewRowAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWDTableViewRowAction.h; sourceTree = "<group>"; };
 		2E8C0C811C43359400B221DC /* SWDTableViewRowAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWDTableViewRowAction.m; sourceTree = "<group>"; };
-		2E8C0C851C4335A200B221DC /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		2E8C0C861C4335A200B221DC /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		2E8C0C881C4335C000B221DC /* SWDynamicTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWDynamicTableView.h; sourceTree = "<group>"; };
 		2E8C0C891C4335C000B221DC /* SWDynamicTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWDynamicTableView.m; sourceTree = "<group>"; };
 		2E8C0C8B1C43363100B221DC /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -57,6 +57,8 @@
 			children = (
 				2E8C0C621C4334F100B221DC /* AppDelegate.h */,
 				2E8C0C631C4334F100B221DC /* AppDelegate.m */,
+				2E760B7E1CEA388100215390 /* ViewController.h */,
+				2E760B7F1CEA388100215390 /* ViewController.m */,
 				2E8C0C6D1C4334F100B221DC /* SWDynamicTableView */,
 				2E8C0C8B1C43363100B221DC /* Info.plist */,
 				2E8C0C8C1C43363100B221DC /* main.m */,
@@ -85,16 +87,14 @@
 		2E8C0C6D1C4334F100B221DC /* SWDynamicTableView */ = {
 			isa = PBXGroup;
 			children = (
-				2E8C0C851C4335A200B221DC /* ViewController.h */,
-				2E8C0C861C4335A200B221DC /* ViewController.m */,
 				2E8C0C881C4335C000B221DC /* SWDynamicTableView.h */,
 				2E8C0C891C4335C000B221DC /* SWDynamicTableView.m */,
-				2E8C0C7C1C43359400B221DC /* SWDEditTableViewCell.h */,
-				2E8C0C7D1C43359400B221DC /* SWDEditTableViewCell.m */,
+				2E8C0C7C1C43359400B221DC /* SWDTableViewCell.h */,
+				2E8C0C7D1C43359400B221DC /* SWDTableViewCell.m */,
 				2E8C0C791C43358F00B221DC /* SWDTableViewCellEditButton.h */,
 				2E8C0C7A1C43358F00B221DC /* SWDTableViewCellEditButton.m */,
-				2E8C0C7E1C43359400B221DC /* SWDTableViewCellEditButtonMagneticContentView.h */,
-				2E8C0C7F1C43359400B221DC /* SWDTableViewCellEditButtonMagneticContentView.m */,
+				2E8C0C7E1C43359400B221DC /* SWDTableViewCellEditButtonContentView.h */,
+				2E8C0C7F1C43359400B221DC /* SWDTableViewCellEditButtonContentView.m */,
 				2E8C0C801C43359400B221DC /* SWDTableViewRowAction.h */,
 				2E8C0C811C43359400B221DC /* SWDTableViewRowAction.m */,
 			);
@@ -171,12 +171,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2E8C0C871C4335A200B221DC /* ViewController.m in Sources */,
 				2E8C0C8A1C4335C000B221DC /* SWDynamicTableView.m in Sources */,
 				2E8C0C841C43359400B221DC /* SWDTableViewRowAction.m in Sources */,
+				2E760B801CEA388100215390 /* ViewController.m in Sources */,
 				2E8C0C7B1C43358F00B221DC /* SWDTableViewCellEditButton.m in Sources */,
-				2E8C0C831C43359400B221DC /* SWDTableViewCellEditButtonMagneticContentView.m in Sources */,
-				2E8C0C821C43359400B221DC /* SWDEditTableViewCell.m in Sources */,
+				2E8C0C831C43359400B221DC /* SWDTableViewCellEditButtonContentView.m in Sources */,
+				2E8C0C821C43359400B221DC /* SWDTableViewCell.m in Sources */,
 				2E8C0C8E1C43363100B221DC /* main.m in Sources */,
 				2E8C0C701C4334F100B221DC /* AppDelegate.m in Sources */,
 			);

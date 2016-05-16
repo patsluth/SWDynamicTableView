@@ -8,11 +8,44 @@
 
 #import <UIKit/UIKit.h>
 
+@class SWDynamicTableView, SWDTableViewRowAction;
 
 
 
 
-@interface SWDynamicTableView : UITableView
+
+@protocol SWDynamicTableViewDelegate <UITableViewDelegate>
+
+@optional
+
+/**
+ *  The edit actions to be displayed to the left of the cell's content view
+ *
+ *  @param tableView
+ *  @param indexPath
+ *
+ *  @return NSArray
+ */
+- (NSArray<SWDTableViewRowAction *> *)tableView:(SWDynamicTableView *)tableView
+			   editActionsLeftForRowAtIndexPath:(NSIndexPath *)indexPath;
+/**
+ *  The edit actions to be displayed to the right of the cell's content view
+ *
+ *  @param tableView
+ *  @param indexPath
+ *
+ *  @return NSArray
+ */
+- (NSArray<SWDTableViewRowAction *> *)tableView:(SWDynamicTableView *)tableView
+			  editActionsRightForRowAtIndexPath:(NSIndexPath *)indexPath;
+
+@end
+
+
+
+
+
+@interface SWDynamicTableView : UITableView <UIGestureRecognizerDelegate>
 {
 }
 

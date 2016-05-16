@@ -1,17 +1,17 @@
 //
-//  SWDTableViewCellEditButtonMagneticContentView.m
+//  SWDTableViewCellEditButtonContentView.m
 //  SWDynamicTableView
 //
 //  Created by Pat Sluth on 2016-01-10.
 //  Copyright © 2016 Pat Sluth. All rights reserved.
 //
 
-#import "SWDTableViewCellEditButtonMagneticContentView.h"
+#import "SWDTableViewCellEditButtonContentView.h"
 
 
 
 
-@interface SWDTableViewCellEditButtonMagneticContentView()
+@interface SWDTableViewCellEditButtonContentView()
 {
 }
 
@@ -24,13 +24,11 @@
 
 
 
-@implementation SWDTableViewCellEditButtonMagneticContentView
+@implementation SWDTableViewCellEditButtonContentView
 
 - (id)init
 {
-    self = [super init];
-    
-    if (self) {
+    if (self = [super init]) {
         
         self.userInteractionEnabled = NO;
         self.clipsToBounds = YES;
@@ -85,7 +83,7 @@
     [self.iconView.centerXAnchor constraintEqualToAnchor:self.centerXAnchor].active = YES;
     [self.iconView.centerYAnchor constraintEqualToAnchor:verticalDitributiveGuide.topAnchor].active = YES;
     
-    //Add label constraints
+    // Add label constraints
     [self.label.widthAnchor constraintEqualToAnchor:self.widthAnchor].active = YES;
     [self.label.heightAnchor constraintEqualToConstant:CGRectGetHeight(self.label.bounds)].active = YES;
     [self.label.centerXAnchor constraintEqualToAnchor:self.centerXAnchor].active = YES;

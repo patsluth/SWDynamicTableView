@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "SWDTableViewCellEditButtonMagneticContentView.h"
+#import "SWDTableViewCellEditButtonContentView.h"
 
 
 
@@ -16,15 +16,19 @@
 
 @interface SWDTableViewCellEditButton : UIView
 
-@property (strong, nonatomic) SWDTableViewCellEditButtonMagneticContentView *contentView;
+@property (strong, nonatomic) SWDTableViewCellEditButtonContentView *contentView;
 
-- (NSArray *)dynamicBehaviours;
+/**
+ *  Array of this buttons UIDynamicBehaviors
+ */
+@property (readonly) NSArray<UIDynamicBehavior *> *bDynamicBehaviours;
+
 /**
  *  Refresh all dynamic items to the updated snap point on the content view
  *
  *  @param snapPoint CGPoint
  */
-- (void)refreshUIDynamicsWithSnapPoint:(CGPoint)snapPoint;
+- (void)snapToPoint:(CGPoint)snapPoint;
 
 @end
 

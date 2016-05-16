@@ -8,7 +8,7 @@
 
 #import "SWDTableViewRowAction.h"
 
-#import "SWDEditTableViewCell.h"
+#import "SWDTableViewCell.h"
 
 
 
@@ -18,7 +18,7 @@
 {
 }
 
-@property (weak, nonatomic) void (^handlerRef)(SWDTableViewRowAction *action, SWDEditTableViewCell *cell);
+@property (strong, nonatomic) SWDDynamicTableViewCellHandler handler;
 
 @end
 
@@ -28,26 +28,30 @@
 
 @implementation SWDTableViewRowAction
 
+#pragma mark - Init
+
 + (instancetype)rowActionWithTitle:(NSString *)title
-                   backgroundColor:(UIColor *)backgroundColor
-                         iconImage:(UIImage *)iconImage
-                           handler:(void (^)(SWDTableViewRowAction *action, SWDEditTableViewCell *cell))handler
+				   backgroundColor:(UIColor *)backgroundColor
+							 image:(UIImage *)image
+						   handler:(SWDDynamicTableViewCellHandler)handler
 {
     SWDTableViewRowAction *action = [[SWDTableViewRowAction alloc] init];
     
     action.title = title;
     action.backgroundColor = backgroundColor;
-    action.iconImage = iconImage;
-    action.handlerRef = handler;
+    action.image = image;
+    action.handler = handler;
     
     return action;
 }
 
-- (void)invokeHandlerWithCell:(SWDEditTableViewCell *)cell
+#pragma mark - SWDTableViewRowAction
+
+- (void)invokeHandlerWithIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.handlerRef) {
-        self.handlerRef(self, cell);
-    }
+	if (self.handler) {
+		self.handler(self, indexPath);
+	}
 }
 
 @end

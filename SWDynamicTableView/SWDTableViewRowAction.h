@@ -8,30 +8,26 @@
 
 #import <UIKit/UIKit.h>
 
-@class SWDEditTableViewCell;
+@class SWDTableViewCell, SWDTableViewRowAction;
+
+typedef void (^SWDDynamicTableViewCellHandler) (SWDTableViewRowAction *action, NSIndexPath *indexPath);
 
 
 
 
 
-@interface SWDTableViewRowAction : NSObject
+@interface SWDTableViewRowAction : UITableViewRowAction
 {
 }
 
-NS_ASSUME_NONNULL_BEGIN
++ (instancetype)rowActionWithTitle:(NSString *)title
+				   backgroundColor:(UIColor *)backgroundColor
+							 image:(UIImage *)image
+						   handler:(SWDDynamicTableViewCellHandler)handler;
 
-@property (strong, nonatomic) NSString *title;
-@property (strong, nonatomic) UIColor *backgroundColor;
-@property (strong, nonatomic) UIImage *iconImage;
+@property (strong, nonatomic) UIImage *image;
 
-+ (_Nonnull instancetype)rowActionWithTitle:(NSString *)title
-                            backgroundColor:(UIColor *)backgroundColor
-                                  iconImage:(nullable UIImage *)iconImage
-                                    handler:(void (^)(SWDTableViewRowAction *action, SWDEditTableViewCell *cell))handler;
-
-- (void)invokeHandlerWithCell:(SWDEditTableViewCell *)cell;
-
-NS_ASSUME_NONNULL_END
+- (void)invokeHandlerWithIndexPath:(NSIndexPath *)indexPath;
 
 @end
 
