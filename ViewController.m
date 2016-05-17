@@ -15,6 +15,11 @@
 
 
 @interface ViewController ()
+{
+}
+
+@property (strong, nonatomic) NSArray<SWDTableViewRowAction *> *leftEditActions;
+@property (strong, nonatomic) NSArray<SWDTableViewRowAction *> *rightEditActions;
 
 @end
 
@@ -102,67 +107,78 @@
 - (NSArray<SWDTableViewRowAction *> *)tableView:(SWDynamicTableView *)tableView
 			   editActionsLeftForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	SWDTableViewRowAction *action1 = [SWDTableViewRowAction
-									  rowActionWithTitle:@"Action1"
-									  backgroundColor:[UIColor orangeColor]
-									  image:nil
-									  handler:^(SWDTableViewRowAction *action, NSIndexPath *indexPath) {
-										  [[tableView cellForRowAtIndexPath:indexPath] setEditing:NO animated:YES];
-										  NSLog(@"%@", action.title);
-									  }];
-	
-	SWDTableViewRowAction *action2 = [SWDTableViewRowAction
-									  rowActionWithTitle:@"Action2"
-									  backgroundColor:[UIColor cyanColor]
-									  image:nil
-									  handler:^(SWDTableViewRowAction *action, NSIndexPath *indexPath) {
-										  [[tableView cellForRowAtIndexPath:indexPath] setEditing:NO animated:YES];
-										  NSLog(@"%@", action.title);
-									  }];
-	
-	SWDTableViewRowAction *action3 = [SWDTableViewRowAction
-									  rowActionWithTitle:@"Action3"
-									  backgroundColor:[UIColor redColor]
-									  image:nil
-									  handler:^(SWDTableViewRowAction *action, NSIndexPath *indexPath) {
-										  [[tableView cellForRowAtIndexPath:indexPath] setEditing:NO animated:YES];
-										  NSLog(@"%@", action.title);
-									  }];
-	
-	return @[action3, action2, action1];
+	return self.leftEditActions;
 }
 
 - (NSArray<SWDTableViewRowAction *> *)tableView:(SWDynamicTableView *)tableView
 			  editActionsRightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	SWDTableViewRowAction *action1 = [SWDTableViewRowAction
-									  rowActionWithTitle:@"Action1"
-									  backgroundColor:[UIColor orangeColor]
-									  image:nil
-									  handler:^(SWDTableViewRowAction *action, NSIndexPath *indexPath) {
-										  [[tableView cellForRowAtIndexPath:indexPath] setEditing:NO animated:YES];
-										  NSLog(@"%@", action.title);
-									  }];
+	return self.rightEditActions;
+}
+
+- (NSArray<SWDTableViewRowAction *> *)leftEditActions
+{
+	if (!_leftEditActions) {
+		
+		SWDTableViewRowAction *action1 = [SWDTableViewRowAction
+										  rowActionWithTitle:@"Action1"
+										  backgroundColor:[UIColor orangeColor]
+										  image:nil
+										  handler:^(SWDTableViewRowAction *action, NSIndexPath *indexPath) {
+											  [[self.tableView cellForRowAtIndexPath:indexPath] setEditing:NO animated:YES];
+											  NSLog(@"%@", action.title);
+										  }];
+		
+		SWDTableViewRowAction *action2 = [SWDTableViewRowAction
+										  rowActionWithTitle:@"Action2"
+										  backgroundColor:[UIColor cyanColor]
+										  image:nil
+										  handler:^(SWDTableViewRowAction *action, NSIndexPath *indexPath) {
+											  [[self.tableView cellForRowAtIndexPath:indexPath] setEditing:NO animated:YES];
+											  NSLog(@"%@", action.title);
+										  }];
+		
+		SWDTableViewRowAction *action3 = [SWDTableViewRowAction
+										  rowActionWithTitle:@"Action3"
+										  backgroundColor:[UIColor redColor]
+										  image:nil
+										  handler:^(SWDTableViewRowAction *action, NSIndexPath *indexPath) {
+											  [[self.tableView cellForRowAtIndexPath:indexPath] setEditing:NO animated:YES];
+											  NSLog(@"%@", action.title);
+										  }];
+		
+		_leftEditActions = @[action1, action2, action3];
+	}
 	
-	SWDTableViewRowAction *action2 = [SWDTableViewRowAction
-									  rowActionWithTitle:@"Action2"
-									  backgroundColor:[UIColor cyanColor]
-									  image:nil
-									  handler:^(SWDTableViewRowAction *action, NSIndexPath *indexPath) {
-										  [[tableView cellForRowAtIndexPath:indexPath] setEditing:NO animated:YES];
-										  NSLog(@"%@", action.title);
-									  }];
+	return _leftEditActions;
+}
+
+- (NSArray<SWDTableViewRowAction *> *)rightEditActions
+{
+	if (!_rightEditActions) {
+		
+		SWDTableViewRowAction *action1 = [SWDTableViewRowAction
+										  rowActionWithTitle:@"Action6"
+										  backgroundColor:[UIColor purpleColor]
+										  image:nil
+										  handler:^(SWDTableViewRowAction *action, NSIndexPath *indexPath) {
+											  [[self.tableView cellForRowAtIndexPath:indexPath] setEditing:NO animated:YES];
+											  NSLog(@"%@", action.title);
+										  }];
+		
+		SWDTableViewRowAction *action2 = [SWDTableViewRowAction
+										  rowActionWithTitle:@"Action7"
+										  backgroundColor:[UIColor magentaColor]
+										  image:nil
+										  handler:^(SWDTableViewRowAction *action, NSIndexPath *indexPath) {
+											  [[self.tableView cellForRowAtIndexPath:indexPath] setEditing:NO animated:YES];
+											  NSLog(@"%@", action.title);
+										  }];
+		
+		_rightEditActions = @[action1, action2];
+	}
 	
-	SWDTableViewRowAction *action3 = [SWDTableViewRowAction
-									  rowActionWithTitle:@"Action3"
-									  backgroundColor:[UIColor redColor]
-									  image:nil
-									  handler:^(SWDTableViewRowAction *action, NSIndexPath *indexPath) {
-										  [[tableView cellForRowAtIndexPath:indexPath] setEditing:NO animated:YES];
-										  NSLog(@"%@", action.title);
-									  }];
-	
-	return @[action1, action2, action3];
+	return _rightEditActions;
 }
 
 @end
