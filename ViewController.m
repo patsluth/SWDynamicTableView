@@ -88,6 +88,15 @@
     return 100;
 }
 
+#pragma mark UIScrollViewDelegate
+
+- (void)scrollViewWillBeginDragging:(SWDynamicTableView *)scrollView
+{
+	for (SWDTableViewCell *cell in [scrollView visibleCells]) {
+		[cell setEditing:NO animated:YES];
+	}
+}
+
 #pragma mark - SWDynamicTableViewDelegate
 
 - (NSArray<SWDTableViewRowAction *> *)tableView:(SWDynamicTableView *)tableView

@@ -1,18 +1,30 @@
 //
-//  SWDTableViewCellEditButton.m
+//  SWDTableViewCellRowActionButton.m
 //  SWDynamicTableView
 //
 //  Created by Pat Sluth on 2016-01-10.
 //  Copyright © 2016 Pat Sluth. All rights reserved.
 //
 
-#import "SWDTableViewCellEditButton.h"
+#import "SWDTableViewCellRowActionButton.h"
 
 
 
 
 
-@implementation SWDTableViewCellEditButton
+@interface SWDTableViewCellRowActionButton()
+{
+}
+
+@property (strong, nonatomic, readwrite) SWDTableViewCellRowActionButtonContentView *contentView;
+
+@end
+
+
+
+
+
+@implementation SWDTableViewCellRowActionButton
 
 #pragma mark - Init
 
@@ -24,7 +36,7 @@
 		self.translatesAutoresizingMaskIntoConstraints = NO;
 		self.backgroundColor = [UIColor lightGrayColor];
 		
-		self.contentView = [[SWDTableViewCellEditButtonContentView alloc] init];
+		self.contentView = [[SWDTableViewCellRowActionButtonContentView alloc] init];
 		[self addSubview:self.contentView];
 		// contentView constraints
 		[self.contentView.heightAnchor constraintEqualToAnchor:self.heightAnchor multiplier:1.0].active = YES;

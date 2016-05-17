@@ -26,6 +26,24 @@
 @end
 
 
+@interface SWDTableViewCell(SWDynamicTableView)
+{
+}
+
+- (void)onPan:(UIGestureRecognizer *)pan;
+
+@end
+
+
+@interface SWDTableViewRowAction(SWDynamicTableView)
+{
+}
+
+- (void)invokeHandlerWithIndexPath:(NSIndexPath *)indexPath;
+
+@end
+
+
 
 
 
@@ -35,32 +53,42 @@
 
 #pragma mark - Init
 
+- (id)init
+{
+	if (self = [super init]) {
+		
+		[self initialize];
+		
+	}
+	
+	return self;
+}
+
+- (void)awakeFromNib
+{
+	[super awakeFromNib];
+	
+	[self initialize];
+}
+
+- (void)initialize
+{
+	self.allowsMultipleEditing = YES;
+}
+
 - (void)didMoveToSuperview
 {
 	[super didMoveToSuperview];
 	
 	[self.pan removeTarget:nil action:nil]; // Remove all targets
 	self.pan = [[UIPanGestureRecognizer alloc] init];
+//	[self.pan addTarget:self action:@selector(onPan:)];
 	self.pan.delegate = self;
 	[self addGestureRecognizer:self.pan];
 	
 	self.tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTap:)];
 	self.tap.delegate = self;
 	[self addGestureRecognizer:self.tap];
-}
-
-- (void)onTap:(UITapGestureRecognizer *)tap
-{
-	CGPoint touchLocation = [tap locationInView:self];
-	NSIndexPath *indexPath = [self indexPathForRowAtPoint:touchLocation];
-	SWDTableViewCell *cell = [self cellForRowAtIndexPath:indexPath];
-	
-	touchLocation = [self convertPoint:touchLocation toView:cell.contentView];
-	
-	// Touch is not on the content view, therefore it must be on an the edit action button
-	if (![cell.contentView pointInside:touchLocation withEvent:nil]) {
-		[cell.currentEditAction invokeHandlerWithIndexPath:indexPath];
-	}
 }
 
 #pragma mark - UIGestureRecognizerDelegate
@@ -93,10 +121,11 @@
 			
 			CGPoint touchLocation = [gestureRecognizer locationInView:self];
 			NSIndexPath *indexPath = [self indexPathForRowAtPoint:touchLocation];
+			SWDTableViewCell *cell = nil;
 			
 			if (indexPath && [self.dataSource tableView:self canEditRowAtIndexPath:indexPath]) {
 				
-				SWDTableViewCell *cell = [self cellForRowAtIndexPath:indexPath];
+				cell = [self cellForRowAtIndexPath:indexPath];
 				
 				// Update cell's edit actions
 				if (self.delegate && [self.delegate respondsToSelector:@selector(tableView:editActionsLeftForRowAtIndexPath:)]) {
@@ -108,18 +137,20 @@
 				
 				[self.pan addTarget:cell action:@selector(onPan:)];
 				
-				if (!self.allowsMultipleSelectionDuringEditing) { // Single cell editing
-					for (SWDTableViewCell *_cell in [self visibleCells]) {
-						if (_cell != cell) {
-							[_cell setEditing:NO animated:YES];
-						}
+			}
+			
+			if (!self.allowsMultipleEditing) {
+				
+				for (SWDTableViewCell *_cell in [self visibleCells]) {
+					if (_cell != cell) {
+						[_cell setEditing:NO animated:YES];
 					}
 				}
 				
-				return YES;
-				
 			}
 			
+			return YES;
+		
 		}
 		
 		return NO;
@@ -139,6 +170,38 @@ shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherG
 	
 	return YES;
 }
+
+#pragma mark - UIGestureRecognizer
+
+- (void)onTap:(UITapGestureRecognizer *)tap
+{
+	CGPoint touchLocation = [tap locationInView:self];
+	NSIndexPath *indexPath = [self indexPathForRowAtPoint:touchLocation];
+	SWDTableViewCell *cell = [self cellForRowAtIndexPath:indexPath];
+	
+	touchLocation = [self convertPoint:touchLocation toView:cell.contentView];
+	
+	// Touch is not on the content view, therefore it must be on an the edit action button
+	if (![cell.contentView pointInside:touchLocation withEvent:nil]) {
+		[cell.currentEditAction invokeHandlerWithIndexPath:indexPath];
+	}
+}
+
+//- (void)onPan:(UIPanGestureRecognizer *)pan
+//{
+//	if (pan.state == UIGestureRecognizerStateEnded) {
+//		
+//		for (SWDTableViewCell *cell in [self visibleCells]) {
+//			
+//			if (cell.isEditing) {
+//				[cell.currentEditAction invokeHandlerWithIndexPath:[self indexPathForCell:cell]];
+//				[cell setEditing:NO animated:YES];
+//			}
+//			
+//		}
+//		
+//	}
+//}
 
 @end
 

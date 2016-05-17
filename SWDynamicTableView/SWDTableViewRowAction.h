@@ -27,8 +27,6 @@ typedef void (^SWDDynamicTableViewCellHandler) (SWDTableViewRowAction *action, N
 
 @property (strong, nonatomic) UIImage *image;
 
-- (void)invokeHandlerWithIndexPath:(NSIndexPath *)indexPath;
-
 @end
 
 

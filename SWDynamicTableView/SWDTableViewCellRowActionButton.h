@@ -1,5 +1,5 @@
 //
-//  SWDTableViewCellEditButton.h
+//  SWDTableViewCellRowActionButton.h
 //  SWDynamicTableView
 //
 //  Created by Pat Sluth on 2016-01-10.
@@ -8,15 +8,17 @@
 
 #import <UIKit/UIKit.h>
 
-#import "SWDTableViewCellEditButtonContentView.h"
+#import "SWDTableViewCellRowActionButtonContentView.h"
 
 
 
 
 
-@interface SWDTableViewCellEditButton : UIView
+@interface SWDTableViewCellRowActionButton : UIView
+{
+}
 
-@property (strong, nonatomic) SWDTableViewCellEditButtonContentView *contentView;
+@property (strong, nonatomic, readonly) SWDTableViewCellRowActionButtonContentView *contentView;
 
 /**
  *  Array of this buttons UIDynamicBehaviors

@@ -25,7 +25,11 @@
 
 @property (weak, nonatomic, readonly) SWDTableViewRowAction *currentEditAction;
 
-- (void)onPan:(UIGestureRecognizer *)pan;
+/**
+ *  The color of the SWDTableViewRowActionButton when offset is less than threshold
+ *	Defaults to [UIColor lightGrayColor]
+ */
+@property (strong, nonatomic) UIColor *defaultEditButtonColor;
 
 @end
 

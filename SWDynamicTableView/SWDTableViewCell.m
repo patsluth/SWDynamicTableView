@@ -8,8 +8,8 @@
 
 #import "SWDTableViewCell.h"
 
-#import "SWDTableViewCellEditButton.h"
-#import "SWDTableViewCellEditButtonContentView.h"
+#import "SWDTableViewCellRowActionButton.h"
+#import "SWDTableViewCellRowActionButtonContentView.h"
 
 
 
@@ -22,10 +22,16 @@
 @property (strong, nonatomic) UIDynamicAnimator *animator;
 @property (strong, nonatomic) UIAttachmentBehavior *attachmentBehaviour;
 
-@property (strong, nonatomic) SWDTableViewCellEditButton *leftEditButton;
-@property (strong, nonatomic) SWDTableViewCellEditButton *rightEditButton;
+@property (strong, nonatomic) SWDTableViewCellRowActionButton *leftEditButton;
+@property (strong, nonatomic) SWDTableViewCellRowActionButton *rightEditButton;
 
-// Keeps track of which edit item we are panning on are so we can snap to it on release
+/**
+ *  Keeps track of which edit item we are panning on are so we can snap to it on release
+ *
+ *	< 0 means left edit actions
+ *	  0 means none
+ *	> 0 means left edit actions
+ */
 @property (readwrite, nonatomic) NSInteger editActionIndex;
 
 @end
@@ -43,15 +49,16 @@
 {
     if (self = [super initWithStyle:style reuseIdentifier:reuseIdentifier]) {
         
-        self.editActionIndex = 0;
-        
-        self.contentView.clipsToBounds = NO;
-        self.selectionStyle = UITableViewCellSelectionStyleNone;
-        
+		self.editActionIndex = 0;
+		self.contentView.clipsToBounds = NO;
+		self.selectionStyle = UITableViewCellSelectionStyleNone;
+		self.defaultEditButtonColor = [UIColor lightGrayColor];
+		
+
         self.animator = [[UIDynamicAnimator alloc] initWithReferenceView:self];
 		
 		
-        self.leftEditButton = [[SWDTableViewCellEditButton alloc] init];
+        self.leftEditButton = [[SWDTableViewCellRowActionButton alloc] init];
         [self.contentView addSubview:self.leftEditButton];
         // Anchor left button content view to the top right corner
         self.leftEditButton.contentView.layer.anchorPoint = CGPointMake(1.0, 0.5);
@@ -62,7 +69,7 @@
         [self.leftEditButton.topAnchor constraintEqualToAnchor:self.contentView.topAnchor].active = YES;
 		
 		
-        self.rightEditButton = [[SWDTableViewCellEditButton alloc] init];
+        self.rightEditButton = [[SWDTableViewCellRowActionButton alloc] init];
         // Anchor right button content view to the top left corner
         self.rightEditButton.contentView.layer.anchorPoint = CGPointMake(0.0, 0.5);
         [self.contentView addSubview:self.rightEditButton];
@@ -102,13 +109,14 @@
 - (void)onPan:(UIPanGestureRecognizer *)pan
 {
 	__unsafe_unretained SWDTableViewCell *weakSelf = self;
-	CGPoint panLocation = [pan locationInView:self];
 	
+	CGPoint panLocation = [pan locationInView:self];
 	
 	if (pan.state == UIGestureRecognizerStateBegan) {
 		
 		[self resetDynamicBehaviours];
 		
+		[self updateEditButtonWithEditItemIndex:self.editActionIndex animated:NO force:YES];
 		
 		// Attach the content view to our pan location
 		self.attachmentBehaviour = [UIAttachmentBehavior slidingAttachmentWithItem:self.contentView
@@ -116,7 +124,7 @@
 																 axisOfTranslation:CGVectorMake(0.0, 1.0)];
 		
 		self.attachmentBehaviour.action = ^{
-			[weakSelf updateEditActionButtons];
+			[weakSelf updateEditButtonWithEditItemIndex:[weakSelf editItemIndexForCurrentOffset] animated:YES force:NO];
 			[weakSelf updateEditMagneticContentView];
 		};
 		
@@ -142,7 +150,7 @@
 		
 		bDynamicItem.action = ^{
 			
-			[weakSelf updateEditActionButtons];
+			[weakSelf updateEditButtonWithEditItemIndex:[weakSelf editItemIndexForCurrentOffset] animated:YES force:NO];
 			[weakSelf updateEditMagneticContentView];
 			
 			CGFloat leftSide = CGRectGetMinX(weakSelf.contentView.frame);
@@ -160,7 +168,7 @@
 			// snap to center if we are moving to slow
 			if (absoluteVelocity < CGRectGetMidX(weakSelf.bounds)) {
 				[weakSelf.animator removeBehavior:weakbDynamicItem];
-				[weakSelf snapToEditActionIndex];
+				[weakSelf snapToCurrentEditActionIndex];
 			}
 			
 		};
@@ -235,17 +243,18 @@
     return 0;
 }
 
-- (void)snapToEditActionIndex
+- (void)snapToCurrentEditActionIndex
 {
     [self resetDynamicBehaviours];
-    
+	
+	__unsafe_unretained SWDTableViewCell *weakSelf = self;
     CGPoint snapPoint = [self snapPointForEditActionIndex:self.editActionIndex];
     
     UISnapBehavior *bSnap = [[UISnapBehavior alloc] initWithItem:self.contentView snapToPoint:snapPoint];
     bSnap.damping = 0.6;
     
-    bSnap.action = ^{
-        [self updateEditMagneticContentView];
+	bSnap.action = ^{
+        [weakSelf updateEditMagneticContentView];
     };
      
     // Remove collision and friction from the magnetic view so it slides smoothly
@@ -262,27 +271,25 @@
 }
 
 /**
- *  Updates state of edit buttons based on position of content view
+ *  Updates state of edit buttons
  */
-- (void)updateEditActionButtons
+- (void)updateEditButtonWithEditItemIndex:(NSInteger)editItemIndex animated:(BOOL)animated force:(BOOL)force
 {
-    NSInteger properEditItemIndex = [self editItemIndexForCurrentOffset];
-    
-    if (properEditItemIndex != self.editActionIndex) { // Did changed items
+    if (force || self.editActionIndex != editItemIndex) { // Did changed items
         
-        self.editActionIndex = properEditItemIndex;
+        self.editActionIndex = editItemIndex;
         
-        [UIView animateWithDuration:0.25
+		[UIView animateWithDuration:animated ? 0.25 : 0.0
                               delay:0.0
                             options:UIViewAnimationCurveEaseInOut | UIViewAnimationOptionBeginFromCurrentState
                          animations:^{
                              
                              if (self.editActionIndex == 0) { // nothing selected
                                  
-                                 self.leftEditButton.contentView.alpha = 0.0;
-                                 self.leftEditButton.backgroundColor = [UIColor lightGrayColor];
+								 self.leftEditButton.contentView.alpha = 0.0;
+                                 self.leftEditButton.backgroundColor = self.defaultEditButtonColor;
                                  self.rightEditButton.contentView.alpha = 0.0;
-                                 self.rightEditButton.backgroundColor = [UIColor lightGrayColor];
+                                 self.rightEditButton.backgroundColor = self.defaultEditButtonColor;
                                  
                              } else {
                                  
@@ -337,7 +344,7 @@
         self.editActionIndex = 0;
         
         if (animated) {
-            [self snapToEditActionIndex];
+            [self snapToCurrentEditActionIndex];
         } else {
             [self prepareForReuse];
         }

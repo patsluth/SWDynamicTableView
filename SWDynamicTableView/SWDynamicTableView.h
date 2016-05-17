@@ -49,6 +49,12 @@
 {
 }
 
+/**
+ *  Allow multiple cells to enter edit mode at once.
+ *	Defaults to YES
+ */
+@property (nonatomic) BOOL allowsMultipleEditing;
+
 @end
 
 
